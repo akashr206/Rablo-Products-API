@@ -5,10 +5,16 @@ const {
     getAllProducts,
     updateProduct,
     deleteProduct,
+    getFeaturedProducts,
+    getProductsByPrice,
+    getProductsByRating
 } = require('../controllers/productController');
 const { protectedRoute } = require('../middlewares/authMiddleware');
 
 router.get('/',protectedRoute, getAllProducts);
+router.get('/featured' ,protectedRoute  , getFeaturedProducts);
+router.get('/price-less-than/:price' ,  protectedRoute, getProductsByPrice);
+router.get('/rating-higher-than/:rating'  , protectedRoute, getProductsByRating);
 
 
 router.post('/' , protectedRoute,addProduct);
