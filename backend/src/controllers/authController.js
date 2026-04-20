@@ -15,9 +15,30 @@ const comparePassword = async (password, hash) => {
 const hashPassword = async (password) => {
     return await bcrypt.hash(password, 12);
 };
+
+const validateInput = (name, email, password) => {
+    if (!name || !email || !password) {
+        return false;
+    }
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(email)) {
+        return false;
+    }
+    if (password.trim().length < 6) {
+        return false;
+    }
+    if (name.trim().length === 0) {
+        return false;
+    }
+    return true;
+};
 exports.signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+
+        if(!validateInput(name, email, password)){
+            return res.status(400).json({ message: 'Invalid input' });
+        }
         const userExists = await User.findOne({ email });
 
         if (userExists) {
@@ -43,6 +64,9 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        if(!validateInput(name, email, password)){
+            return res.status(400).json({ message: 'Invalid input' });
+        }
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(401).json({ message: 'User not found' });
