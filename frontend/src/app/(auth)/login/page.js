@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { Mail, Lock, Loader2 } from 'lucide-react';
+import { validateEmail } from '@/lib/utils';
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -19,7 +21,19 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+
     setLoading(true);
+
     try {
       const data = await authApi.login({ email, password });
       login(data);
@@ -69,6 +83,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  minLength={6}
                 />
               </div>
             </div>

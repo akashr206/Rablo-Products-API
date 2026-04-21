@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { User, Mail, Lock, Loader2 } from 'lucide-react';
+import { validateEmail, validatePassword } from '@/lib/utils';
+
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -26,7 +28,19 @@ export default function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(formData.email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    if (!validatePassword(formData.password)) {
+      toast.error('Password must be at least 6 characters and contain both letters and numbers');
+      return;
+    }
+
     setLoading(true);
+
     try {
       const data = await authApi.signup(formData);
       login(data);
@@ -91,6 +105,9 @@ export default function SignupPage() {
                   value={formData.password}
                   onChange={handleChange}
                   required
+                  minLength={6}
+                  pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+                  title="Password must be at least 6 characters and contain both letters and numbers"
                 />
               </div>
             </div>
