@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
         default: false
     },
     rating: {
-        type: mongoose.Schema.Types.Decimal128,
+        type: Number,
         default: 0.0
     },
     company: {
