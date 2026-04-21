@@ -38,10 +38,22 @@ export const authApi = {
 };
 
 export const productApi = {
-  getAll: () => apiFetch('/products'),
-  getFeatured: () => apiFetch('/products/featured'),
-  getByPrice: (price) => apiFetch(`/products/price-less-than/${price}`),
-  getByRating: (rating) => apiFetch(`/products/rating-higher-than/${rating}`),
+  getAll: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return apiFetch(`/products${query ? `?${query}` : ''}`);
+  },
+  getFeatured: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return apiFetch(`/products/featured${query ? `?${query}` : ''}`);
+  },
+  getByPrice: (price, params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return apiFetch(`/products/price-less-than/${price}${query ? `?${query}` : ''}`);
+  },
+  getByRating: (rating, params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return apiFetch(`/products/rating-higher-than/${rating}${query ? `?${query}` : ''}`);
+  },
   add: (product) => apiFetch('/products', {
     method: 'POST',
     body: JSON.stringify(product),
