@@ -271,7 +271,7 @@ export default function DashboardPage() {
                             size="icon"
                             onClick={fetchProducts}
                             disabled={loading}
-                            className="h-10 w-10 border-slate-200 text-slate-600 flex-shrink-0 bg-white"
+                            className="h-10 w-10 border-slate-200 text-slate-600 shrink-0 bg-white"
                         >
                             {loading ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -516,23 +516,23 @@ export default function DashboardPage() {
                                                 )}
                                             </TableCell>
                                             <TableCell className="text-right pr-6">
-                                                <div className="flex gap-1 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <div className="flex gap-1 justify-end  transition-opacity">
                                                     <Button
-                                                        variant="ghost"
+                                                        variant="outline"
                                                         size="icon"
-                                                        className="h-8 w-8 text-slate-400 hover:text-slate-900 hover:bg-white border border-transparent hover:border-slate-200"
+                                                        className="h-8 w-8"
                                                         onClick={() =>
                                                             handleOpenDialog(
                                                                 product,
                                                             )
                                                         }
                                                     >
-                                                        <Edit2 className="h-3.5 w-3.5" />
+                                                        <Edit className="h-3.5 w-3.5" />
                                                     </Button>
                                                     <Button
-                                                        variant="ghost"
+                                                        variant="outline"
                                                         size="icon"
-                                                        className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100"
+                                                        className="h-8 w-8 text-red-600 hover:text-red-400 bg-red-50 border border-red-100"
                                                         onClick={() =>
                                                             handleDelete(
                                                                 product.productId,
